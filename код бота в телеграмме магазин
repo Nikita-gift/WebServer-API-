@@ -1,0 +1,63 @@
+from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+
+TOKEN = "7754017118:AAF8inVsWtgjR46_J7GVVhgL6IcjMurVnpI"  # Замени на свой!
+
+# Данные магазина
+SHOP_INFO = {
+    "name": "🔥 Es computers",
+    "address": "г.Курск элеваторный переулок 2",
+    "phone": "+7 904 524 69 68",
+    "website": "",
+    "work_time": "🕒 Пн-Пт: 10:00-19:00, Сб-Вс: 11:00-17:00",
+    "categories": ["💻 Ноутбуки", "🖥️ Компьютеры", "📱 Гаджеты", "🎧 Аксессуары"]
+}
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    keyboard = [
+        ["📍 Адрес", "📞 Контакты"],
+        ["🕒 График работы", "🛒 Товары"],
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+
+    await update.message.reply_text(
+        f"Добро пожаловать в <b>{SHOP_INFO['name']}</b>!\n"
+        "Выберите нужную информацию:",
+        reply_markup=reply_markup,
+        parse_mode="HTML"
+    )
+
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    text = update.message.text
+
+    if text == "📍 Адрес":
+        await update.message.reply_text(f"🏬 <b>Наш адрес:</b>\n{SHOP_INFO['address']}", parse_mode="HTML")
+
+    elif text == "📞 Контакты":
+        await update.message.reply_text(
+            f"📱 <b>Телефон:</b> {SHOP_INFO['phone']}\n"
+            f"🌐 <b>Сайт:</b> {SHOP_INFO['website']}",
+            parse_mode="HTML"
+        )
+
+    elif text == "🕒 График работы":
+        await update.message.reply_text(f"⏳ <b>Мы работаем:</b>\n{SHOP_INFO['work_time']}", parse_mode="HTML")
+
+    elif text == "🛒 Товары":
+        categories = "\n".join(SHOP_INFO["categories"])
+        await update.message.reply_text(f"📦 <b>Категории товаров:</b>\n{categories}", parse_mode="HTML")
+
+
+def main() -> None:
+    app = Application.builder().token(TOKEN).build()  # Используем Application вместо Updater
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+    app.run_polling()  # Запуск бота
+
+
+if __name__ == "__main__":
+    main()
