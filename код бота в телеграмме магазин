@@ -1,9 +1,8 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-TOKEN = "7754017118:AAF8inVsWtgjR46_J7GVVhgL6IcjMurVnpI"  # Замени на свой!
+TOKEN = "7754017118:AAF8inVsWtgjR46_J7GVVhgL6IcjMurVnpI"
 
-# Данные магазина
 SHOP_INFO = {
     "name": "🔥 Es computers",
     "address": "г.Курск элеваторный переулок 2",
@@ -13,6 +12,34 @@ SHOP_INFO = {
     "categories": ["💻 Ноутбуки", "🖥️ Компьютеры", "📱 Гаджеты", "🎧 Аксессуары"]
 }
 
+PRODUCTS = {
+    "💻 Ноутбуки": [
+        {
+            "name": "ASUS X515",
+            "price": "45 000 руб",
+            "description": "Мощный ноутбук для работы и игр",
+            "specs": "Процессор: Intel Core i5\nОЗУ: 8 ГБ\nДиск: 512 ГБ SSD",
+            "photo_url": "https://example.com/asus_x515.jpg"
+        },
+        {
+            "name": "HP Pavilion",
+            "price": "55 000 руб",
+            "description": "Стильный ноутбук с экраном IPS",
+            "specs": "Процессор: AMD Ryzen 7\nОЗУ: 16 ГБ\nДиск: 1 ТБ HDD + 256 ГБ SSD",
+            "photo_url": "https://example.com/hp_pavilion.jpg"
+        }
+    ],
+    "🖥️ Компьютеры": [
+        {
+            "name": "Игровой ПК",
+            "price": "85 000 руб",
+            "description": "Производительная игровая система",
+            "specs": "Процессор: Intel Core i7\nВидеокарта: RTX 3070\nОЗУ: 32 ГБ",
+            "photo_url": "https://example.com/gaming_pc.jpg"
+        }
+    ],
+    # Добавьте другие категории по аналогии
+}
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
@@ -20,44 +47,83 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         ["🕒 График работы", "🛒 Товары"],
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
-
     await update.message.reply_text(
-        f"Добро пожаловать в <b>{SHOP_INFO['name']}</b>!\n"
-        "Выберите нужную информацию:",
+        f"Добро пожаловать в <b>{SHOP_INFO['name']}</b>!\nВыберите нужную информацию:",
         reply_markup=reply_markup,
         parse_mode="HTML"
     )
 
-
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text
+    response = None
+    keyboard = None
 
+    # Главное меню
     if text == "📍 Адрес":
-        await update.message.reply_text(f"🏬 <b>Наш адрес:</b>\n{SHOP_INFO['address']}", parse_mode="HTML")
-
+        response = f"🏬 <b>Наш адрес:</b>\n{SHOP_INFO['address']}"
     elif text == "📞 Контакты":
-        await update.message.reply_text(
-            f"📱 <b>Телефон:</b> {SHOP_INFO['phone']}\n"
-            f"🌐 <b>Сайт:</b> {SHOP_INFO['website']}",
-            parse_mode="HTML"
-        )
-
+        response = f"📱 <b>Телефон:</b> {SHOP_INFO['phone']}\n🌐 <b>Сайт:</b> {SHOP_INFO['website']}"
     elif text == "🕒 График работы":
-        await update.message.reply_text(f"⏳ <b>Мы работаем:</b>\n{SHOP_INFO['work_time']}", parse_mode="HTML")
-
+        response = f"⏳ <b>Мы работаем:</b>\n{SHOP_INFO['work_time']}"
+    
+    # Меню товаров
     elif text == "🛒 Товары":
-        categories = "\n".join(SHOP_INFO["categories"])
-        await update.message.reply_text(f"📦 <b>Категории товаров:</b>\n{categories}", parse_mode="HTML")
+        keyboard = [SHOP_INFO["categories"][i:i+2] for i in range(0, len(SHOP_INFO["categories"]), 2)]
+        keyboard.append(["⬅️ Главное меню"])
+        response = "Выберите категорию:"
+    
+    # Навигация
+    elif text == "⬅️ Главное меню":
+        keyboard = [
+            ["📍 Адрес", "📞 Контакты"],
+            ["🕒 График работы", "🛒 Товары"],
+        ]
+        response = "Главное меню:"
+    
+    elif text == "⬅️ К категориям":
+        keyboard = [SHOP_INFO["categories"][i:i+2] for i in range(0, len(SHOP_INFO["categories"]), 2)]
+        keyboard.append(["⬅️ Главное меню"])
+        response = "Выберите категорию:"
+    
+    # Обработка категорий
+    elif text in PRODUCTS:
+        context.user_data['current_category'] = text
+        products = [product["name"] for product in PRODUCTS[text]]
+        keyboard = [[product] for product in products] + [["⬅️ К категориям"]]
+        response = f"Товары в категории {text}:"
+    
+    # Обработка товаров
+    else:
+        current_category = context.user_data.get('current_category')
+        if current_category:
+            for product in PRODUCTS.get(current_category, []):
+                if text == product["name"]:
+                    response = (
+                        f"<b>{product['name']}</b>\n"
+                        f"<i>{product['description']}</i>\n"
+                        f"💵 Цена: {product['price']}\n"
+                        f"📝 Характеристики:\n{product['specs']}"
+                    )
+                    if product.get('photo_url'):
+                        await update.message.reply_photo(
+                            product['photo_url'],
+                            caption=response,
+                            parse_mode="HTML"
+                        )
+                        response = None
+                    keyboard = [["⬅️ К товарам"]]
+                    break
 
+    # Отправка ответа
+    if response:
+        reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True) if keyboard else None
+        await update.message.reply_text(response, reply_markup=reply_markup, parse_mode="HTML")
 
 def main() -> None:
-    app = Application.builder().token(TOKEN).build()  # Используем Application вместо Updater
-
+    app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-
-    app.run_polling()  # Запуск бота
-
+    app.run_polling()
 
 if __name__ == "__main__":
     main()
