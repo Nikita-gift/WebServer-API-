@@ -14,7 +14,7 @@ from telegram.ext import (
 from typing import Dict, List
 
 # Константы
-TOKEN = "7754017118:AAF8inVsWtgjR46_J7GVVhgL6IcjMurVnpI"
+TOKEN = "Токен телеграмм бота"
 
 # Состояния для диалога
 CART, PHONE, NAME, DELIVERY, ADDRESS, CONFIRMATION = range(6)
