@@ -1,6 +1,5 @@
 import json
 import sqlite3
-
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from telegram.ext import (
     Application,
@@ -30,7 +29,6 @@ def load_shop_data():
             "name": "🔥 Es computers",
             "address": "г.Курск элеваторный переулок 2",
             "phone": "+7 904 524 69 68",
-            "website": "",
             "work_time": "🕒 Пн-Пт: 10:00-19:00, Сб-Вс: 11:00-17:00",
             "categories": ["💻 Ноутбуки", "🖥️ Компьютеры", "📱 Гаджеты", "🎧 Аксессуары"],
             "products": {
@@ -42,9 +40,103 @@ def load_shop_data():
                         "description": "Мощный ноутбук для работы и игр",
                         "specs": "Процессор: Intel Core i5\nОЗУ: 8 ГБ\nДиск: 512 ГБ SSD",
                         "photo_url": "2025-05-04_11-03-46.png",
+                    },
+                    {
+                        "id": 2,
+                        "name": "Lenovo IdeaPad 5",
+                        "price": 55000,
+                        "description": "Стильный и производительный ноутбук",
+                        "specs": "Процессор: AMD Ryzen 7\nОЗУ: 16 ГБ\nДиск: 1 ТБ SSD",
+                        "photo_url": "2025-05-04_11-03-00.png",
+                    },
+                    {
+                        "id": 3,
+                        "name": "Apple MacBook Air M1",
+                        "price": 89990,
+                        "description": "Ультратонкий ноутбук с процессором Apple M1",
+                        "specs": "Процессор: Apple M1\nОЗУ: 8 ГБ\nДиск: 256 ГБ SSD",
+                        "photo_url": "2025-05-14_19-07-56.png",
+                    }
+                ],
+                "🖥️ Компьютеры": [
+                    {
+                        "id": 4,
+                        "name": "Игровой PC AMD",
+                        "price": 75000,
+                        "description": "Мощный игровой компьютер",
+                        "specs": "Процессор: AMD Ryzen 5 5600X\nВидеокарта: NVIDIA RTX 3060\nОЗУ: 16 ГБ\nДиск: 1 ТБ SSD",
+                        "photo_url": "2025-05-04_10-58-36.png",
+                    },
+                    {
+                        "id": 5,
+                        "name": "Офисный компьютер",
+                        "price": 35000,
+                        "description": "Надежный компьютер для офиса",
+                        "specs": "Процессор: Intel Core i3\nОЗУ: 8 ГБ\nДиск: 512 ГБ SSD",
+                        "photo_url": "2025-05-14_19-13-05.png",
+                    },
+                    {
+                        "id": 6,
+                        "name": "Моноблок Lenovo",
+                        "price": 65000,
+                        "description": "Компактный все-в-одном",
+                        "specs": "Процессор: Intel Core i5\nОЗУ: 12 ГБ\nДиск: 512 ГБ SSD\nЭкран: 23.8\"",
+                        "photo_url": "2025-05-14_19-14-09.png",
+                    }
+                ],
+                "📱 Гаджеты": [
+                    {
+                        "id": 7,
+                        "name": "Samsung Galaxy S23",
+                        "price": 79990,
+                        "description": "Флагманский смартфон",
+                        "specs": "Экран: 6.1\" AMOLED\nПроцессор: Snapdragon 8 Gen 2\nПамять: 256 ГБ",
+                        "photo_url": "2025-05-14_19-20-18.png",
+                    },
+                    {
+                        "id": 8,
+                        "name": "Apple iPad Air",
+                        "price": 59990,
+                        "description": "Мощный планшет с дисплеем Retina",
+                        "specs": "Экран: 10.9\"\nПроцессор: Apple M1\nПамять: 256 ГБ",
+                        "photo_url": "2025-05-14_19-21-01.png",
+                    },
+                    {
+                        "id": 9,
+                        "name": "Xiaomi Redmi Note 12",
+                        "price": 24990,
+                        "description": "Смартфон с отличным соотношением цены и качества",
+                        "specs": "Экран: 6.67\" AMOLED\nПроцессор: Snapdragon 685\nПамять: 128 ГБ",
+                        "photo_url": "2025-05-14_19-21-50.png",
+                    }
+                ],
+                "🎧 Аксессуары": [
+                    {
+                        "id": 10,
+                        "name": "Наушники Sony WH-1000XM5",
+                        "price": 29990,
+                        "description": "Беспроводные наушники с шумоподавлением",
+                        "specs": "Тип: беспроводные\nАктивное шумоподавление\nАвтономность: 30 ч",
+                        "photo_url": "2025-05-14_19-23-17.png",
+                    },
+                    {
+                        "id": 11,
+                        "name": "Мышь Logitech MX Master 3",
+                        "price": 8990,
+                        "description": "Эргономичная беспроводная мышь",
+                        "specs": "Тип: беспроводная\nРазрешение: 4000 dpi\nАвтономность: 70 дней",
+                        "photo_url": "2025-05-14_19-24-10.png",
+                    },
+                    {
+                        "id": 12,
+                        "name": "Клавиатура Keychron K2",
+                        "price": 12990,
+                        "description": "Механическая клавиатура с подсветкой",
+                        "specs": "Тип: механическая\nПодключение: Bluetooth/USB\nПереключатели: Gateron",
+                        "photo_url": "2025-05-14_19-24-53.png",
                     }
                 ]
-            },
+            }
         }
 
 
@@ -92,6 +184,96 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
+async def show_categories(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        SHOP_INFO["categories"][i:i + 2]
+        for i in range(0, len(SHOP_INFO["categories"]), 2)
+    ]
+    keyboard.append(["⬅️ Главное меню"])
+    await update.message.reply_text(
+        "Выберите категорию:",
+        reply_markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True),
+    )
+
+
+async def search_products(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        if not context.args:
+            await update.message.reply_text("🔍 <b>Использование:</b> /search <b><название товара></b>",
+                                            parse_mode="HTML")
+            return
+
+        query = " ".join(context.args).lower()
+        found_products = []
+
+        for category, products in PRODUCTS.items():
+            for product in products:
+                if query in product["name"].lower():
+                    found_products.append((category, product))
+
+        if not found_products:
+            await update.message.reply_text("🔎 <b>Товары не найдены.</b> Попробуйте изменить запрос.",
+                                            parse_mode="HTML")
+            return
+
+        response = "🔍 <b>Результаты поиска:</b>\n\n"
+        for category, product in found_products:
+            response += (
+                f"📌 <b>{product['name']}</b> (<i>{category}</i>)\n"
+                f"💵 Цена: {format_price(product['price'])}\n"
+                f"📝 Описание: {product['description']}\n\n"
+            )
+
+        await update.message.reply_text(response, parse_mode="HTML")
+    except Exception as e:
+        print(f"Ошибка в команде /search: {e}")
+        await update.message.reply_text("⚠️ Произошла ошибка при поиске. Попробуйте позже.")
+
+
+async def show_popular(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # В реальном боте можно брать популярные товары из БД (по кол-ву заказов)
+    popular_products = [
+        PRODUCTS["💻 Ноутбуки"][2],  # MacBook Air M1
+        PRODUCTS["📱 Гаджеты"][0],  # Samsung Galaxy S23
+        PRODUCTS["🎧 Аксессуары"][0]  # Sony WH-1000XM5
+    ]
+
+    response = "🔥 <b>Самые популярные товары:</b>\n\n"
+    for product in popular_products:
+        response += (
+            f"📌 <b>{product['name']}</b>\n"
+            f"💵 Цена: {format_price(product['price'])}\n"
+            f"📝 Описание: {product['description']}\n\n"
+        )
+
+    await update.message.reply_text(response, parse_mode="HTML")
+
+
+async def handle_support(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📩 По вопросам сотрудничества и поддержки пишите @Sokolovskiq",
+        reply_markup=ReplyKeyboardMarkup([["⬅️ Главное меню"]], resize_keyboard=True),
+    )
+
+
+async def show_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = (
+        f"🏬 <b>{SHOP_INFO['name']}</b>\n\n"
+        f"📍 <b>Адрес:</b> {SHOP_INFO['address']}\n"
+        f"📞 <b>Телефон:</b> {SHOP_INFO['phone']}\n"
+        f"🕒 <b>График работы:</b> {SHOP_INFO['work_time']}\n"
+    )
+    await update.message.reply_text(text, parse_mode="HTML")
+
+
+async def clear_context(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    context.user_data.clear()
+    await update.message.reply_text(
+        "🔄 Контекст бота очищен. Вы вернулись в главное меню.",
+        reply_markup=ReplyKeyboardMarkup([["⬅️ Главное меню"]], resize_keyboard=True),
+    )
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text
     response = None
@@ -100,16 +282,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if text == "📍 Адрес":
         response = f"🏬 <b>Наш адрес:</b>\n{SHOP_INFO['address']}"
     elif text == "📞 Контакты":
-        response = f"📱 <b>Телефон:</b> {SHOP_INFO['phone']}\n🌐 <b>Сайт:</b> {SHOP_INFO['website']}"
+        response = f"📱 <b>Телефон:</b> {SHOP_INFO['phone']}"
     elif text == "🕒 График работы":
         response = f"⏳ <b>Мы работаем:</b>\n{SHOP_INFO['work_time']}"
     elif text == "🛒 Товары":
-        keyboard = [
-            SHOP_INFO["categories"][i:i + 2]
-            for i in range(0, len(SHOP_INFO["categories"]), 2)
-        ]
-        keyboard.append(["⬅️ Главное меню"])
-        response = "Выберите категорию:"
+        await show_categories(update, context)
+        return
     elif text == "⬅️ Главное меню":
         keyboard = [
             ["📍 Адрес", "📞 Контакты"],
@@ -117,12 +295,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         ]
         response = "Главное меню:"
     elif text == "⬅️ К категориям":
-        keyboard = [
-            SHOP_INFO["categories"][i:i + 2]
-            for i in range(0, len(SHOP_INFO["categories"]), 2)
-        ]
-        keyboard.append(["⬅️ Главное меню"])
-        response = "Выберите категорию:"
+        await show_categories(update, context)
+        return
+    elif text == "⬅️ К товарам":
+        current_category = context.user_data.get("current_category")
+        if current_category:
+            products = [product["name"] for product in PRODUCTS[current_category]]
+            keyboard = [[product] for product in products] + [["⬅️ К категориям"]]
+            response = f"Товары в категории {current_category}:"
+        else:
+            response = "Категория не выбрана"
     elif text in PRODUCTS:
         context.user_data["current_category"] = text
         products = [product["name"] for product in PRODUCTS[text]]
@@ -154,6 +336,45 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if response:
         reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True) if keyboard else None
         await update.message.reply_text(response, reply_markup=reply_markup, parse_mode="HTML")
+
+
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    try:
+        # Формируем текст помощи с HTML-разметкой
+        help_text = (
+            "ℹ️ <b>Доступные команды:</b>\n\n"
+            "🛒 <b>Основные команды:</b>\n"
+            "/start - Перезапустить бота\n"
+            "/help - Показать это сообщение\n"
+            "/catalog - Показать все категории товаров\n"
+            "/search [запрос] - Найти товар\n\n"
+            "📱 <b>Дополнительные команды:</b>\n"
+            "/popular - Топ товаров\n"
+            "/about - Информация о магазине\n"
+            "/support - Связь с поддержкой\n"
+            "/clear - Сбросить диалог\n\n"
+            "🔍 <b>Примеры:</b>\n"
+            "<code>/search MacBook</code> - найти ноутбуки Apple\n"
+            "<code>/catalog</code> - показать все категории"
+        )
+
+        # Отправляем сообщение с HTML-разметкой
+        await update.message.reply_text(
+            text=help_text,
+            parse_mode="HTML",
+            disable_web_page_preview=True
+        )
+
+    except Exception as e:
+        # Логируем ошибку
+        print(f"⛔ Ошибка в команде /help: {str(e)}")
+
+        # Отправляем простое сообщение об ошибке без форматирования
+        error_text = (
+            "Извините, произошла ошибка при загрузке справки.\n"
+            "Попробуйте позже или используйте /start для перезагрузки бота."
+        )
+        await update.message.reply_text(error_text)
 
 
 async def start_order(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -247,6 +468,13 @@ def main() -> None:
     )
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("catalog", show_categories))
+    app.add_handler(CommandHandler("search", search_products))
+    app.add_handler(CommandHandler("popular", show_popular))
+    app.add_handler(CommandHandler("support", handle_support))
+    app.add_handler(CommandHandler("about", show_about))
+    app.add_handler(CommandHandler("clear", clear_context))
     app.add_handler(order_conv)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
@@ -255,3 +483,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
