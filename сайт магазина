@@ -56,21 +56,21 @@
     <h2>Популярные товары</h2>
     <div class="products">
         <div class="product">
-            <img src="https://via.placeholder.com/300" alt="Ноутбук">
+            <img src="2025-05-04_11-03-46.png" alt="Ноутбук">
             <h3>ASUS X515</h3>
             <div class="price">45 000 руб</div>
             <p>Мощный ноутбук для работы и игр</p>
             <a href="#order" class="btn" onclick="setProduct('ASUS X515', 45000)">Заказать</a>
         </div>
         <div class="product">
-            <img src="https://via.placeholder.com/300" alt="Ноутбук">
+            <img src="2025-05-14_19-07-56.png" alt="Ноутбук">
             <h3>MacBook Air M1</h3>
             <div class="price">89 990 руб</div>
             <p>Ультратонкий ноутбук Apple</p>
             <a href="#order" class="btn" onclick="setProduct('MacBook Air M1', 89990)">Заказать</a>
         </div>
         <div class="product">
-            <img src="https://via.placeholder.com/300" alt="Смартфон">
+            <img src="2025-05-14_19-20-18.png" alt="Смартфон">
             <h3>Samsung S23</h3>
             <div class="price">79 990 руб</div>
             <p>Флагманский смартфон</p>
